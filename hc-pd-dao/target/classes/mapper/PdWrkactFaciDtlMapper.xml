@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactFaciDtlMapper" >
+  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    <id column="line_id" property="lineId" jdbcType="BIGINT" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
+    <result column="work_process_code" property="workProcessCode" jdbcType="VARCHAR" />
+    <result column="work_value" property="workValue" jdbcType="DECIMAL" />
+    <result column="order_no" property="orderNo" jdbcType="SMALLINT" />
+    <result column="work_group_code" property="workGroupCode" jdbcType="VARCHAR" />
+    <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="func_relation" property="funcRelation" jdbcType="INTEGER" />
+    <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
+    <result column="to_work_group_code" property="toWorkGroupCode" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="work_process_value" property="workProcessValue" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="work_process_name" property="workProcessName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.line_id, a.bill_no, a.wrkact_no, a.work_process_code, a.work_value, a.order_no, a.work_group_code, 
+    a.unit_no, a.standard, a.func_relation, a.alias_name, a.to_work_group_code,b.description,
+    b.work_process_value,b.remarks,b.work_process_name
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.billNo and ''!=params.billNo" >
+        and a.bill_no= #{params.billNo}        
+      </if> 
+      <if test="null!=params.wrkactNo and ''!=params.wrkactNo" >
+        and a.wrkact_no= #{params.wrkactNo}        
+      </if>       
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_wrkact_faci_dtl a
+    left join pd_work_process b on a.work_process_code=b.work_process_code
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM pd_wrkact_faci_dtl WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_wrkact_faci_dtl a
+     left join pd_work_process b on a.work_process_code=b.work_process_code
+      WHERE 1=1 
+    <include refid="condition" />
+    <choose>
+    	<when test="orderByField != null and ''!=orderByField">
+    		order by order_no asc,${orderByField}
+    		<if test="orderByField" >
+	        	${orderBy}
+	      	</if>
+    	</when>
+    	<otherwise>
+    		order by order_no asc
+    	</otherwise>
+    </choose>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_wrkact_faci_dtl a
+     left join pd_work_process b on a.work_process_code=b.work_process_code
+      WHERE 1=1 
+    <include refid="condition" />
+    order by order_no asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    DELETE FROM pd_wrkact_faci_dtl
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    DELETE FROM pd_wrkact_faci_dtl
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    INSERT INTO pd_wrkact_faci_dtl (line_id, bill_no, wrkact_no, 
+      work_process_code, work_value, order_no, 
+      work_group_code, unit_no, standard, 
+      func_relation, alias_name, to_work_group_code
+      )
+    VALUES (#{lineId,jdbcType=BIGINT}, #{billNo,jdbcType=VARCHAR}, #{wrkactNo,jdbcType=VARCHAR}, 
+      #{workProcessCode,jdbcType=VARCHAR}, #{workValue,jdbcType=DECIMAL}, #{orderNo,jdbcType=SMALLINT}, 
+      #{workGroupCode,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, 
+      #{funcRelation,jdbcType=INTEGER}, #{aliasName,jdbcType=VARCHAR}, #{toWorkGroupCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    INSERT INTO pd_wrkact_faci_dtl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="billNo != null" >
+        bill_no,
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no,
+      </if>
+      <if test="workProcessCode != null" >
+        work_process_code,
+      </if>
+      <if test="workValue != null" >
+        work_value,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="workGroupCode != null" >
+        work_group_code,
+      </if>
+      <if test="unitNo != null" >
+        unit_no,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="funcRelation != null" >
+        func_relation,
+      </if>
+      <if test="aliasName != null" >
+        alias_name,
+      </if>
+      <if test="toWorkGroupCode != null" >
+        to_work_group_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=BIGINT},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactNo != null" >
+        #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workProcessCode != null" >
+        #{workProcessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workValue != null" >
+        #{workValue,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=SMALLINT},
+      </if>
+      <if test="workGroupCode != null" >
+        #{workGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="funcRelation != null" >
+        #{funcRelation,jdbcType=INTEGER},
+      </if>
+      <if test="aliasName != null" >
+        #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="toWorkGroupCode != null" >
+        #{toWorkGroupCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    UPDATE pd_wrkact_faci_dtl
+    <set >
+      <if test="billNo != null" >
+        bill_no = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="workProcessCode != null" >
+        work_process_code = #{workProcessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workValue != null" >
+        work_value = #{workValue,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=SMALLINT},
+      </if>
+      <if test="workGroupCode != null" >
+        work_group_code = #{workGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="funcRelation != null" >
+        func_relation = #{funcRelation,jdbcType=INTEGER},
+      </if>
+      <if test="aliasName != null" >
+        alias_name = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="toWorkGroupCode != null" >
+        to_work_group_code = #{toWorkGroupCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciDtl" >
+    UPDATE pd_wrkact_faci_dtl
+    SET bill_no = #{billNo,jdbcType=VARCHAR},
+      wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      work_process_code = #{workProcessCode,jdbcType=VARCHAR},
+      work_value = #{workValue,jdbcType=DECIMAL},
+      order_no = #{orderNo,jdbcType=SMALLINT},
+      work_group_code = #{workGroupCode,jdbcType=VARCHAR},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      func_relation = #{funcRelation,jdbcType=INTEGER},
+      alias_name = #{aliasName,jdbcType=VARCHAR},
+      to_work_group_code = #{toWorkGroupCode,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+</mapper>

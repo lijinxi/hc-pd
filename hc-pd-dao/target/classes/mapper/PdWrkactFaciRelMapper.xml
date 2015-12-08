@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactFaciRelMapper" >
+  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    <id column="line_id" property="lineId" jdbcType="BIGINT" />
+    <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
+    <result column="material_no" property="materialNo" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="style_no" property="styleNo" jdbcType="VARCHAR" />
+    <result column="model_no" property="modelNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.line_id, a.wrkact_no, a.material_no,b.material_name,b.style_no,b.model_no
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.billNo and ''!=params.billNo" >
+        and bill_no= #{params.billNo}        
+      </if> 
+      <if test="null!=params.wrkactNo and ''!=params.wrkactNo" >
+        and wrkact_no= #{params.wrkactNo}        
+      </if>       
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_wrkact_faci_rel a 
+    left join bas_material b on a.material_no=b.material_no
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM pd_wrkact_faci_rel WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_wrkact_faci_rel a
+      left join bas_material b on a.material_no=b.material_no
+      WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_wrkact_faci_rel a
+       left join bas_material b on a.material_no=b.material_no
+       WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    DELETE FROM pd_wrkact_faci_rel
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    DELETE FROM pd_wrkact_faci_rel
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    INSERT INTO pd_wrkact_faci_rel (line_id, wrkact_no, material_no
+      )
+    VALUES (#{lineId,jdbcType=BIGINT}, #{wrkactNo,jdbcType=VARCHAR}, #{materialNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    INSERT INTO pd_wrkact_faci_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no,
+      </if>
+      <if test="materialNo != null" >
+        material_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=BIGINT},
+      </if>
+      <if test="wrkactNo != null" >
+        #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNo != null" >
+        #{materialNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    UPDATE pd_wrkact_faci_rel
+    <set >
+      <if test="wrkactNo != null" >
+        wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNo != null" >
+        material_no = #{materialNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+    UPDATE pd_wrkact_faci_rel
+    SET wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      material_no = #{materialNo,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+</mapper>

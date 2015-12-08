@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.belle.scm.pd.dao.mapper.PdWorkProcessCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    <id column="line_id" property="lineId" jdbcType="BIGINT" />
+    <result column="work_cate_code" property="workCateCode" jdbcType="VARCHAR" />
+    <result column="work_cate_name" property="workCateName" jdbcType="VARCHAR" />
+    <result column="enable_flag" property="enableFlag" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    line_id, work_cate_code, work_cate_name, enable_flag, description, creator, create_time, 
+    modifier, modify_time, remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.workCateCode and ''!=params.workCateCode" >
+        and work_cate_code like concat('%',#{params.workCateCode},'%')
+      </if>
+      <if test="null!=params.workCateName and ''!=params.workCateName" >
+        and work_cate_name like concat('%',#{params.workCateName},'%')
+      </if>
+      <if test="null!=params.enableFlag and ''!=params.enableFlag" >
+        and enable_flag= #{params.enableFlag}
+      </if>      
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_work_process_category
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM pd_work_process_category WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_work_process_category WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_work_process_category WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="checkCategoryNo" resultType="java.lang.String" parameterType="java.lang.String">
+  select work_cate_code from pd_work_process where work_cate_code=#{workCateCode,jdbcType=VARCHAR} LIMIT 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    DELETE FROM pd_work_process_category
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    DELETE FROM pd_work_process_category
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    INSERT INTO pd_work_process_category (line_id, work_cate_code, work_cate_name, 
+      enable_flag, description, creator, 
+      create_time, modifier, modify_time, 
+      remarks)
+    VALUES (#{lineId,jdbcType=BIGINT}, #{workCateCode,jdbcType=VARCHAR}, #{workCateName,jdbcType=VARCHAR}, 
+      #{enableFlag,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    INSERT INTO pd_work_process_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="workCateCode != null" >
+        work_cate_code,
+      </if>
+      <if test="workCateName != null" >
+        work_cate_name,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=BIGINT},
+      </if>
+      <if test="workCateCode != null" >
+        #{workCateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workCateName != null" >
+        #{workCateName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    UPDATE pd_work_process_category
+    <set >
+      <if test="workCateCode != null" >
+        work_cate_code = #{workCateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workCateName != null" >
+        work_cate_name = #{workCateName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+    UPDATE pd_work_process_category
+    SET work_cate_code = #{workCateCode,jdbcType=VARCHAR},
+      work_cate_name = #{workCateName,jdbcType=VARCHAR},
+      enable_flag = #{enableFlag,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+</mapper>

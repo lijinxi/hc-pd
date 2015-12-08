@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactMainMapper" >
+  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    <id column="line_id" property="lineId" jdbcType="BIGINT" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
+    <result column="wrkact_type" property="wrkactType" jdbcType="SMALLINT" />
+    <result column="model_no" property="modelNo" jdbcType="VARCHAR" />
+    <result column="style_no" property="styleNo" jdbcType="VARCHAR" />
+    <result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+    <result column="version_no" property="versionNo" jdbcType="INTEGER" />
+    <result column="iso_no" property="isoNo" jdbcType="VARCHAR" />
+    <result column="bill_status" property="billStatus" jdbcType="TINYINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    line_id, bill_no, wrkact_no, wrkact_type, model_no, style_no, category_no, version_no, 
+    iso_no, bill_status, creator, create_time, modifier, modify_time, auditor, audit_time, 
+    remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.billNo and ''!=params.billNo" >
+        and bill_no= #{params.billNo}        
+      </if> 
+      <if test="null!=params.billStatus and ''!=params.billStatus" >
+        and bill_status= #{params.billStatus}        
+      </if> 
+      <if test="null!=params.wrkactNo and ''!=params.wrkactNo" >
+        and wrkact_no= #{params.wrkactNo}        
+      </if> 
+      <if test="null!=params.wrkactType and ''!=params.wrkactType" >
+        and wrkact_type= #{params.wrkactType}        
+      </if>
+      <if test="null!=params.styleNo and ''!=params.styleNo" >
+        and style_no= #{params.styleNo}        
+      </if> 
+      <if test="null!=params.modelNo and ''!=params.modelNo" >
+        and model_no= #{params.modelNo}        
+      </if> 
+      <if test="null!=params.categoryNo and ''!=params.categoryNo" >
+        and category_no= #{params.categoryNo}        
+      </if> 
+      <if test="null!=params.auditTime1 and ''!=params.auditTime2" >
+        and date(audit_time) between #{params.auditTime1} and #{params.auditTime2}     
+      </if>
+	      <if test="null!=params.createTime1 and ''!=params.createTime2" >
+        and date(create_time) between #{params.createTime1} and #{params.createTime2}     
+      </if>
+      <if test="null!=params.creator and ''!=params.creator" >
+        and creator= #{params.creator}        
+      </if>   
+      <if test="null!=params.auditor and ''!=params.auditor" >
+        and auditor= #{params.auditor}        
+      </if>  
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_wrkact_main a
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s FROM pd_wrkact_main a WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_wrkact_main 
+    WHERE 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     FROM pd_wrkact_main 
+     WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    DELETE FROM pd_wrkact_main
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    DELETE FROM pd_wrkact_main
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </delete>
+  
+  <!-- 审核-->
+  <update id="audit" parameterType="java.lang.String" >
+    update pd_wrkact_main set bill_status=40 WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 反审核-->
+  <update id="reAudit" parameterType="java.lang.String" >
+    update pd_wrkact_main set bill_status=5 WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 释放-->
+  <update id="onRelease" parameterType="java.lang.String" >
+    update pd_wrkact_main set bill_status=45 WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 取消释放-->
+  <update id="onRelRelease" parameterType="java.lang.String" >
+    update pd_wrkact_main set bill_status=40 WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 设置版本号-->
+  <update id="onSetVersion" parameterType="java.lang.String" >
+	update pd_wrkact_main A,
+	(
+	  select case when count(1)=0 then 1 else max(version_no)+1 
+	  		 end as version_no from pd_wrkact_main  
+	  where wrkact_no in
+	  (
+	    select distinct wrkact_no from pd_wrkact_main_rel where material_no in
+	    (
+	      select material_no from pd_wrkact_main_rel where wrkact_no= #{wrkactNo,jdbcType=VARCHAR}
+	    ) and wrkact_no!= #{wrkactNo,jdbcType=VARCHAR}
+	  )
+	) B
+	set a.version_no=b.version_no
+	where a.wrkact_no= #{wrkactNo,jdbcType=VARCHAR}
+  </update>
+    
+  <!-- 审核插入到事业部工序工分库主表 -->
+  <insert id="auditInsertPdWrkactMain" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    INSERT INTO pd_wrkact_faci (bill_no, wrkact_no, 
+      wrkact_type, model_no, style_no, 
+      category_no, version_no, iso_no, 
+      bill_status, creator, create_time, 
+      modifier, modify_time, auditor, 
+      audit_time, remarks)
+    SELECT bill_no, wrkact_no, 
+      wrkact_type, model_no, style_no, 
+      category_no, version_no, iso_no, 
+      bill_status, creator, create_time, 
+      modifier, modify_time, auditor, 
+      audit_time, remarks
+    FROM  pd_wrkact_main WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
+  </insert>
+  
+  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    INSERT INTO pd_wrkact_main (line_id, bill_no, wrkact_no, 
+      wrkact_type, model_no, style_no, 
+      category_no, version_no, iso_no, 
+      bill_status, creator, create_time, 
+      modifier, modify_time, auditor, 
+      audit_time, remarks)
+    VALUES (#{lineId,jdbcType=BIGINT}, #{billNo,jdbcType=VARCHAR}, #{billNo,jdbcType=VARCHAR}, 
+      #{wrkactType,jdbcType=SMALLINT}, #{modelNo,jdbcType=VARCHAR}, #{styleNo,jdbcType=VARCHAR}, 
+      #{categoryNo,jdbcType=VARCHAR}, #{versionNo,jdbcType=INTEGER}, #{isoNo,jdbcType=VARCHAR}, 
+      5, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    INSERT INTO pd_wrkact_main
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        line_id,
+      </if>
+      <if test="billNo != null" >
+        bill_no,
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no,
+      </if>
+      <if test="wrkactType != null" >
+        wrkact_type,
+      </if>
+      <if test="modelNo != null" >
+        model_no,
+      </if>
+      <if test="styleNo != null" >
+        style_no,
+      </if>
+      <if test="categoryNo != null" >
+        category_no,
+      </if>
+      <if test="versionNo != null" >
+        version_no,
+      </if>
+      <if test="isoNo != null" >
+        iso_no,
+      </if>
+      <if test="billStatus != null" >
+        bill_status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lineId != null" >
+        #{lineId,jdbcType=BIGINT},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billNo != null" >
+        #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactType != null" >
+        #{wrkactType,jdbcType=SMALLINT},
+      </if>
+      <if test="modelNo != null" >
+        #{modelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleNo != null" >
+        #{styleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryNo != null" >
+        #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        #{versionNo,jdbcType=INTEGER},
+      </if>
+      <if test="isoNo != null" >
+        #{isoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billStatus != null" >
+        5,
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    UPDATE pd_wrkact_main
+    <set >
+      <if test="billNo != null" >
+        bill_no = #{billNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactNo != null" >
+        wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wrkactType != null" >
+        wrkact_type = #{wrkactType,jdbcType=SMALLINT},
+      </if>
+      <if test="modelNo != null" >
+        model_no = #{modelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="styleNo != null" >
+        style_no = #{styleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryNo != null" >
+        category_no = #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNo != null" >
+        version_no = #{versionNo,jdbcType=INTEGER},
+      </if>
+      <if test="isoNo != null" >
+        iso_no = #{isoNo,jdbcType=VARCHAR},
+      </if>
+      <if test="billStatus != null" >
+        bill_status = #{billStatus,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMain" >
+    UPDATE pd_wrkact_main
+    SET bill_no = #{billNo,jdbcType=VARCHAR},
+      wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
+      wrkact_type = #{wrkactType,jdbcType=SMALLINT},
+      model_no = #{modelNo,jdbcType=VARCHAR},
+      style_no = #{styleNo,jdbcType=VARCHAR},
+      category_no = #{categoryNo,jdbcType=VARCHAR},
+      version_no = #{versionNo,jdbcType=INTEGER},
+      iso_no = #{isoNo,jdbcType=VARCHAR},
+      bill_status = #{billStatus,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    WHERE line_id = #{lineId,jdbcType=BIGINT}
+  </update>
+</mapper>

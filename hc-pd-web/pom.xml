@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>hc-pd</artifactId>
+    <groupId>com.hc.scm</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.hc.scm</groupId>
+  <artifactId>hc-pd-web</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>huaichen::hc-pd::web</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <!-- 本工程 -->
+		<dependency>
+			<groupId>com.hc.scm</groupId>
+			<artifactId>hc-pd-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- jnuit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- springframework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<!-- connection pool -->
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+		</dependency>
+		<!-- javax -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<!-- commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<!-- logback -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.logback-extensions</groupId>
+		  <artifactId>logback-ext-spring</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.jasig.cas.client</groupId>
+		  <artifactId>cas-client-core</artifactId>
+		  <exclusions>  
+            <exclusion>  
+                <artifactId>commons-codec</artifactId>  
+                <groupId>commons-codec</groupId>  
+            </exclusion>  
+        </exclusions>  
+		</dependency>
+  </dependencies>
+  <build>
+    <finalName>hc-pd-web</finalName>
+  </build>
+</project>

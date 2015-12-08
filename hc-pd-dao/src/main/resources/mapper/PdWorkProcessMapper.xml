@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.belle.scm.pd.dao.mapper.PdWorkProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    <id column="process_id" property="processId" jdbcType="INTEGER" />
+    <result column="work_process_code" property="workProcessCode" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="work_process_name" property="workProcessName" jdbcType="VARCHAR" />
+    <result column="work_value" property="workValue" jdbcType="DECIMAL" />
+    <result column="work_group_code" property="workGroupCode" jdbcType="VARCHAR" />
+    <result column="is_virtual" property="isVirtual" jdbcType="INTEGER" />
+    <result column="parent_process_id" property="parentProcessId" jdbcType="INTEGER" />
+    <result column="units" property="units" jdbcType="INTEGER" />
+    <result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="work_process_value" property="workProcessValue" jdbcType="INTEGER" />
+    <result column="work_cate_code" property="workCateCode" jdbcType="VARCHAR" />
+    <result column="enable_flag" property="enableFlag" jdbcType="INTEGER" />
+    <result column="level_no" property="levelNo" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="work_cate_name" property="workCateName" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="work_group_cn" property="workGroupCodeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.process_id, a.work_process_code, a.order_no, a.work_process_name, a.work_value, a.work_group_code, 
+    a.is_virtual, a.parent_process_id, a.units, a.category_no, a.description, a.work_process_value, 
+    a.work_cate_code, a.level_no,a.enable_flag, a.creator, a.create_time, a.modifier, a.modify_time, a.remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="null!=params.queryCondition and ''!=params.queryCondition" >
+        ${params.queryCondition}
+      </if>
+      <if test="null!=params.processId and ''!=params.processId" >
+        and a.parent_process_id= #{params.processId}
+      </if>
+      <if test="null!=params.workProcessCode and ''!=params.workProcessCode" >
+        and a.work_process_code like concat('%',#{params.workProcessCode},'%') 
+      </if>
+      <if test="null!=params.workProcessName and ''!=params.workProcessName" >
+        and a.work_process_name like concat('%',#{params.workProcessName},'%') 
+      </if>            
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM pd_work_process as a
+    WHERE process_id = #{processId,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    SELECT COUNT(1) as s 
+    FROM pd_work_process as a      
+    WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     ,b.work_cate_name,
+     c.category_name,
+     case when a.level_no=1 then 
+	     	concat(a.work_group_code,'-',d.work_group_name)  
+	     when a.level_no=2 then
+	     	concat(a.work_cate_code,'-',b.work_cate_name) 
+	 	else concat(a.work_process_code,'-',a.work_process_name) 
+	 end work_group_cn
+     FROM pd_work_process as a 
+     LEFT JOIN pd_work_process_category as b on a.work_cate_code=b.work_cate_code
+     LEFT JOIN bas_category as c on a.category_no=c.category_no
+     LEFT JOIN pd_work_group d on a.work_group_code=d.work_group_code
+     WHERE 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      ORDER BY ${orderByField}
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+     ,b.work_cate_name,
+     c.category_name,
+     case when a.level_no=1 then 
+	     	concat(a.work_group_code,'-',d.work_group_name)  
+	     when a.level_no=2 then
+	     	concat(a.work_cate_code,'-',b.work_cate_name) 
+	 	else concat(a.work_process_code,'-',a.work_process_name) 
+	 end work_group_cn
+     FROM pd_work_process as a 
+     LEFT JOIN pd_work_process_category as b on a.work_cate_code=b.work_cate_code
+     LEFT JOIN bas_category as c on a.category_no=c.category_no
+     LEFT JOIN pd_work_group d on a.work_group_code=d.work_group_code     
+     WHERE 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="checkDeleteWorkProcess" resultType="java.lang.Integer"  parameterType="java.lang.Integer" >
+  	SELECT COUNT(1)
+  	FROM pd_work_process as a
+  	WHERE parent_process_id = #{processId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    DELETE FROM pd_work_process
+    WHERE process_id = #{processId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    DELETE FROM pd_work_process
+    WHERE process_id = #{processId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="processId" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    INSERT INTO pd_work_process (work_process_code, order_no, 
+      work_process_name, work_value, work_group_code, 
+      is_virtual, parent_process_id, units, 
+      category_no, description, work_process_value, 
+      work_cate_code, level_no,enable_flag, creator, 
+      create_time, modifier, modify_time, 
+      remarks)
+    SELECT 
+      <choose>
+      	<when test="workCateCode != null and  workCateCode!=''">
+      		(SELECT case when coalesce(max(work_process_code),'')='' then
+				concat(#{workGroupCode,jdbcType=VARCHAR},#{workCateCode,jdbcType=VARCHAR},'0001') else
+				concat(#{workGroupCode,jdbcType=VARCHAR},#{workCateCode,jdbcType=VARCHAR},
+					right(concat('0000',cast(right(max(work_process_code),4) as SIGNED INTEGER)+1),4)
+				)end
+			FROM pd_work_process WHERE work_group_code=#{workGroupCode,jdbcType=VARCHAR} and work_cate_code=#{workCateCode,jdbcType=VARCHAR}),
+      	</when>
+      	<otherwise>
+      		(SELECT case when coalesce(max(work_process_code),'')='' then
+				concat(#{workGroupCode,jdbcType=VARCHAR},'0001') else
+				concat(#{workGroupCode,jdbcType=VARCHAR},
+					right(concat('0000',cast(right(max(work_process_code),4) as SIGNED INTEGER)+1),4)
+				)end
+			FROM pd_work_process WHERE work_group_code=#{workGroupCode,jdbcType=VARCHAR}),
+      	</otherwise>
+      </choose>
+      #{orderNo,jdbcType=INTEGER}, 
+      #{workProcessName,jdbcType=VARCHAR}, #{workValue,jdbcType=DECIMAL}, #{workGroupCode,jdbcType=VARCHAR}, 
+      #{isVirtual,jdbcType=INTEGER}, #{parentProcessId,jdbcType=INTEGER}, #{units,jdbcType=INTEGER}, 
+      #{categoryNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{workProcessValue,jdbcType=INTEGER}, 
+      #{workCateCode,jdbcType=VARCHAR}, #{levelNo,jdbcType=INTEGER},#{enableFlag,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="processId"  parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    INSERT INTO pd_work_process
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        work_process_code,
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="workProcessName != null" >
+        work_process_name,
+      </if>
+      <if test="workValue != null" >
+        work_value,
+      </if>
+      <if test="workGroupCode != null" >
+        work_group_code,
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual,
+      </if>
+      <if test="parentProcessId != null" >
+        parent_process_id,
+      </if>
+      <if test="units != null" >
+        units,
+      </if>
+      <if test="categoryNo != null" >
+        category_no,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="workProcessValue != null" >
+        work_process_value,
+      </if>
+      <if test="workCateCode != null" >
+        work_cate_code,
+      </if>
+      <if test="levelNo != null" >
+        level_no,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim suffixOverrides="," >
+      SELECT
+		<choose>
+      		<when test="workCateCode != null and  workCateCode!=''">
+      			(SELECT case when coalesce(max(work_process_code),'')='' then
+					concat(#{workGroupCode,jdbcType=VARCHAR},#{workCateCode,jdbcType=VARCHAR},'0001') else
+					concat(#{workGroupCode,jdbcType=VARCHAR},#{workCateCode,jdbcType=VARCHAR},
+						right(concat('0000',cast(right(max(work_process_code),4) as SIGNED INTEGER)+1),4)
+					)end
+				FROM pd_work_process WHERE work_group_code=#{workGroupCode,jdbcType=VARCHAR} and work_cate_code=#{workCateCode,jdbcType=VARCHAR}),
+      		</when>
+      		<otherwise>
+      			(SELECT case when coalesce(max(work_process_code),'')='' then
+					concat(#{workGroupCode,jdbcType=VARCHAR},'0001') else
+					concat(#{workGroupCode,jdbcType=VARCHAR},
+						right(concat('0000',cast(right(max(work_process_code),4) as SIGNED INTEGER)+1),4)
+					)end
+				FROM pd_work_process WHERE work_group_code=#{workGroupCode,jdbcType=VARCHAR}),
+      		</otherwise>
+      	</choose>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="workProcessName != null" >
+        #{workProcessName,jdbcType=VARCHAR},
+      </if>
+      <if test="workValue != null" >
+        #{workValue,jdbcType=DECIMAL},
+      </if>
+      <if test="workGroupCode != null" >
+        #{workGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        #{isVirtual,jdbcType=INTEGER},
+      </if>
+      <if test="parentProcessId != null" >
+        #{parentProcessId,jdbcType=INTEGER},
+      </if>
+      <if test="units != null" >
+        #{units,jdbcType=INTEGER},
+      </if>
+      <if test="categoryNo != null" >
+        #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="workProcessValue != null" >
+        #{workProcessValue,jdbcType=INTEGER},
+      </if>
+      <if test="workCateCode != null" >
+        #{workCateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="levelNo != null" >
+        #{levelNo,jdbcType=INTEGER},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    UPDATE pd_work_process
+    <set >
+      <if test="workProcessCode != null" >
+        work_process_code = #{workProcessCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=INTEGER},
+      </if>
+      <if test="workProcessName != null" >
+        work_process_name = #{workProcessName,jdbcType=VARCHAR},
+      </if>
+      <if test="workValue != null" >
+        work_value = #{workValue,jdbcType=DECIMAL},
+      </if>
+      <if test="workGroupCode != null" >
+        work_group_code = #{workGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isVirtual != null" >
+        is_virtual = #{isVirtual,jdbcType=INTEGER},
+      </if>
+      <if test="parentProcessId != null" >
+        parent_process_id = #{parentProcessId,jdbcType=INTEGER},
+      </if>
+      <if test="units != null" >
+        units = #{units,jdbcType=INTEGER},
+      </if>
+      <if test="categoryNo != null" >
+        category_no = #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="workProcessValue != null" >
+        work_process_value = #{workProcessValue,jdbcType=INTEGER},
+      </if>
+      <if test="workCateCode != null" >
+        work_cate_code = #{workCateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="levelNo != null" >
+        level_no = #{levelNo,jdbcType=INTEGER},
+      </if>      
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE process_id = #{processId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+    UPDATE pd_work_process
+    SET work_process_code = #{workProcessCode,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=INTEGER},
+      work_process_name = #{workProcessName,jdbcType=VARCHAR},
+      work_value = #{workValue,jdbcType=DECIMAL},
+      work_group_code = #{workGroupCode,jdbcType=VARCHAR},
+      is_virtual = #{isVirtual,jdbcType=INTEGER},
+      parent_process_id = #{parentProcessId,jdbcType=INTEGER},
+      units = #{units,jdbcType=INTEGER},
+      category_no = #{categoryNo,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      work_process_value = #{workProcessValue,jdbcType=INTEGER},
+      work_cate_code = #{workCateCode,jdbcType=VARCHAR},
+      level_no = #{levelNo,jdbcType=INTEGER},
+      enable_flag = #{enableFlag,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    WHERE process_id = #{processId,jdbcType=INTEGER}
+  </update>
+</mapper>
