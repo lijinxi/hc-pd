@@ -70,7 +70,155 @@
         </exclusions>  
 		</dependency>
   </dependencies>
-  <build>
-    <finalName>hc-pd-web</finalName>
-  </build>
+ 
+ 
+ <build>
+		<finalName>hc-pd-web</finalName>
+		<plugins>
+			<!--合并压缩Js/css -->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>yuicompressor</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<jswarn>false</jswarn>
+					<force>false</force>
+					<linebreakpos>-1</linebreakpos>
+					<preProcessAggregates>false</preProcessAggregates>
+					<nosuffix>true</nosuffix>
+					<includes>
+						<include>**/*.js</include>
+					</includes>
+					<excludes>
+						<exclude>resources/static/**/*.*</exclude>
+					</excludes>
+					<aggregations>
+						<aggregation>
+							<insertNewLine>true</insertNewLine>
+							<inputDir>${project.build.directory}/${project.build.finalName}/resources/app</inputDir>
+							<output>${project.basedir}/src/main/webapp/resources/js/pd-all.js</output><!-- # -->
+							<includes>
+								<include>**/*.js</include>
+							</includes>
+							<excludes>								
+								<exclude>controller/*.js</exclude>
+							</excludes>
+						</aggregation>
+
+						<aggregation>
+							<insertNewLine>true</insertNewLine>
+							<inputDir>${project.basedir}/src/main/webapp/resources/app</inputDir>
+							<output>${project.basedir}/src/main/webapp/resources/js/pd-all-debug.js</output><!-- # -->
+							<includes>
+								<include>**/*.js</include>
+							</includes>
+							<excludes>								
+								<exclude>controller/*.js</exclude>
+							</excludes>
+						</aggregation>
+					</aggregations>
+				</configuration>
+			</plugin>
+			
+			<!--替换文本 把requires属性替换为空 不让动态加载文件 -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>${project.basedir}/src/main/webapp/resources/js/pd-all.js</include>
+						<include>${project.basedir}/src/main/webapp/resources/js/pd-all-debug.js</include>
+					</includes>
+					<replacements>
+						<replacement>
+							<token>
+								<![CDATA[
+								requires(\s*):(\s*)\[(.*?)\],
+								]]>
+							</token>
+							<value>
+								<![CDATA[]]>
+							</value>
+						</replacement>
+					</replacements>
+					<regexFlags>
+						<regexFlag>CASE_INSENSITIVE</regexFlag>
+						<regexFlag>DOTALL</regexFlag>
+					</regexFlags>
+				</configuration>
+			</plugin>
+			
+			<!--copy 静态文件 -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<copy todir="${basedir}/src/main/webapp/resources/static">
+									<fileset
+										dir="${basedir}/../../hc-common/hc-common-web/src/main/webapp/static" />
+								</copy>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- deploy/install不再向maven私服上传zip和war包-S -->
+		<!--  	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-install-plugin</artifactId>
+			    <version>2.5.1</version>
+			    <configuration>
+			        <skip>true</skip>
+			    </configuration>
+			</plugin>-->
+			<!-- deploy/install不再向maven私服上传zip和war包-E -->
+			
+		</plugins>
+		
+	<!-- 	<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources> -->
+	</build>
+ 
 </project>

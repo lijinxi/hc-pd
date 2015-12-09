@@ -11,7 +11,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hc.common.version>0.0.1-SNAPSHOT</hc.common.version> 
 	</properties>
-	
+	<distributionManagement>
+		<repository>
+			<id>nexus-SNAPSHOT</id>
+			<name>SNAPSHOT</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</distributionManagement>
 	 <dependencyManagement>
         <dependencies>
             <dependency>
@@ -87,7 +93,7 @@
                     </configuration>
                 </plugin>
 
-                <!-- enforcer插件, 避免被依赖的依赖引入过期的jar�?-->
+                <!-- enforcer插件, 避免被依赖的依赖引入过期的jar�?-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
@@ -109,7 +115,7 @@
                                     <bannedDependencies>
                                         <searchTransitive>true</searchTransitive>
                                         <excludes>
-                                            <!-- <exclude>commons-logging</exclude> --><!-- spring日志机制为commons-logging，若排除则在引用spring-web时也�?��此项依赖排除，这样会导致启动报错，需注释 -->
+                                            <!-- <exclude>commons-logging</exclude> --><!-- spring日志机制为commons-logging，若排除则在引用spring-web时也�?��此项依赖排除，这样会导致启动报错，需注释 -->
                                             <exclude>aspectj:aspectj*</exclude>
                                             <exclude>org.springframework</exclude>
                                         </excludes>
