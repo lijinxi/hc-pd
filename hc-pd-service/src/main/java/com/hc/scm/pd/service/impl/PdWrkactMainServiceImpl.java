@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Description: 本部工序工分表 All rights Reserved, Designed By BeLLE Copyright:
+ * Description: 本部工序工分表 All rights Reserved, Designed By hcpyright:
  * Copyright(C) 2014-2015 Company: Wonhigh.
  * 
  * @author: yujh

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWorkProcessMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWorkProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     <id column="process_id" property="processId" jdbcType="INTEGER" />
     <result column="work_process_code" property="workProcessCode" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
@@ -110,11 +110,11 @@
     DELETE FROM pd_work_process
     WHERE process_id = #{processId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     DELETE FROM pd_work_process
     WHERE process_id = #{processId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert"  useGeneratedKeys="true" keyProperty="processId" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="processId" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     INSERT INTO pd_work_process (work_process_code, order_no, 
       work_process_name, work_value, work_group_code, 
       is_virtual, parent_process_id, units, 
@@ -149,7 +149,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=VARCHAR}
   </insert>
-  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="processId"  parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="processId"  parameterType="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     INSERT INTO pd_work_process
     <trim prefix="(" suffix=")" suffixOverrides="," >
         work_process_code,
@@ -284,7 +284,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     UPDATE pd_work_process
     <set >
       <if test="workProcessCode != null" >
@@ -347,7 +347,7 @@
     </set>
     WHERE process_id = #{processId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcess" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcess" >
     UPDATE pd_work_process
     SET work_process_code = #{workProcessCode,jdbcType=VARCHAR},
       order_no = #{orderNo,jdbcType=INTEGER},

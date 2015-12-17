@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactFaciRelMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWrkactFaciRelMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
     <result column="material_no" property="materialNo" jdbcType="VARCHAR" />
@@ -62,17 +62,17 @@
     DELETE FROM pd_wrkact_faci_rel
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     DELETE FROM pd_wrkact_faci_rel
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     INSERT INTO pd_wrkact_faci_rel (line_id, wrkact_no, material_no
       )
     VALUES (#{lineId,jdbcType=BIGINT}, #{wrkactNo,jdbcType=VARCHAR}, #{materialNo,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     INSERT INTO pd_wrkact_faci_rel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     UPDATE pd_wrkact_faci_rel
     <set >
       <if test="wrkactNo != null" >
@@ -109,7 +109,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaciRel" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaciRel" >
     UPDATE pd_wrkact_faci_rel
     SET wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
       material_no = #{materialNo,jdbcType=VARCHAR}

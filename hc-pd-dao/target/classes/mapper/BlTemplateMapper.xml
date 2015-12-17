@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.BlTemplateMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.BlTemplate" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.BlTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.BlTemplate" >
     <result column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
@@ -29,11 +29,11 @@
     <include refid="condition" />
     order by id 
   </select>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.BlTemplate" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.BlTemplate" >
     INSERT INTO bl_template (id, name)
     VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.BlTemplate" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.BlTemplate" >
     INSERT INTO bl_template
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

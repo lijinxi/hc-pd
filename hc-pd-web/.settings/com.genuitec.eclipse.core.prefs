@@ -1,0 +1,4 @@
+#Thu Dec 17 03:23:23 CST 2015
+eclipse.preferences.version=1
+validator.Checked=src/main/webapp/resources/static/js/extjs/ext-all-debug.js,target/hc-pd-web/resources/static/js/extjs/ext-all-debug.js,target/hc-pd-web/resources/static/js/extjs/ext-all.js,src/main/webapp/resources/static/js/extjs/ext-all.js
+validator.Unchecked=

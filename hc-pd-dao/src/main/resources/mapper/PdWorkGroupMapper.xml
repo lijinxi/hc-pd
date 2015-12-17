@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWorkGroupMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWorkGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="work_group_type" property="workGroupType" jdbcType="VARCHAR" />
     <result column="work_group_code" property="workGroupCode" jdbcType="VARCHAR" />
@@ -69,11 +69,11 @@
     DELETE FROM pd_work_group
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     DELETE FROM pd_work_group
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     INSERT INTO pd_work_group (line_id, work_group_type, work_group_code, 
       work_group_name, enable_flag, description, 
       creator, create_time, modifier, 
@@ -83,7 +83,7 @@
       #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     INSERT INTO pd_work_group
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -156,7 +156,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     UPDATE pd_work_group
     <set >
       <if test="workGroupType != null" >
@@ -192,7 +192,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWorkGroup" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWorkGroup" >
     UPDATE pd_work_group
     SET work_group_type = #{workGroupType,jdbcType=VARCHAR},
       work_group_code = #{workGroupCode,jdbcType=VARCHAR},

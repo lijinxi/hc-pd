@@ -1,20 +1,4 @@
-/**
- * Description:
- * All rights Reserved, Designed By Hc
- * Copyright:   Copyright(C) 2014-2015
- * Company:     Wonhigh.
- * author:      wudefeng
- * Createdate:  2015/1/20 002017:12
- *
- * Modification  History:
- * Date         Author             What
- * ------------------------------------------
- *
- */
-Ext.define('Hc_Common.model.Base',{
-   extend:'Ext.data.Model'
-});
-
+Ext.define("Hc_Common.model.Base",{extend:"Ext.data.Model"});
 Ext.define("Hc_Common.model.MaterialSize",{extend:"Ext.data.Model",fields:[{name:"f1",allowNull:true},{name:"f2",allowNull:true},{name:"f3",allowNull:true},{name:"f4",allowNull:true},{name:"f5",allowNull:true},{name:"f6",allowNull:true},{name:"f7",allowNull:true},{name:"f8",allowNull:true},{name:"f9",allowNull:true},{name:"f10",allowNull:true},{name:"f11",allowNull:true},{name:"f12",allowNull:true},{name:"f13",allowNull:true},{name:"f14",allowNull:true},{name:"f15",allowNull:true},{name:"f16",allowNull:true},{name:"f17",allowNull:true},{name:"f18",allowNull:true},{name:"f19",allowNull:true},{name:"f20",allowNull:true}]});
 Ext.define("Hc_Common.store.Base",{extend:"Ext.data.Store",alias:"store.basestore",buffered:false,autoLoad:false,remoteSort:true,remoteFilter:true,proxy:{type:"ajax",reader:{type:"json",rootProperty:"list",totalProperty:"totalCount"},writer:{type:"json",writeAllFields:true,rootProperty:"items"},actionMethods:{create:"POST",read:"POST",update:"POST",destroy:"POST"},pageParam:"pageNum",limitParam:"pageSize",startParam:""},listeners:{beforeload:function(a){var c=a.getSorters();if(c&&c.items.length>0){var b=[];Ext.Array.each(c.items,function(d){b.push(d.getProperty()+" "+d.getDirection().toLowerCase())});a.proxy.extraParams.sort=b.join(",")}else{delete a.proxy.extraParams.sort}},load:function(c,b,g,f){if(f.success){var j=f.getResponse();if(!j){Hc.alert("访问服务器异常,请与系统管理员联系");return}var a=j.responseText;try{a=JSON.parse(a);if(a.result){if(a.result.resultCode!=0){Hc.alert(a.result.msg,function(){if(a.result.resultCode=="timeout"){location.href=Hc.basePath+"logout.json"}})}}}catch(h){Hc.alert("服务器返回不是有效的JSON数据")}}else{try{var i=JSON.parse(f.error.response.responseText);Hc.alert(i.result.msg)}catch(h){console.dir(h)}}}}});
 Ext.define("Hc_Common.store.ComBase",{extend:"Hc_Common.store.Base",alias:"store.combasestore",autoLoad:true,remoteSort:false,remoteFilter:false,proxy:{type:"ajax",reader:{type:"json",rootProperty:"list",totalProperty:"totalCount"}}});

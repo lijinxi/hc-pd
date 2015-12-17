@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactMainRelMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWrkactMainRelMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
     <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
@@ -66,7 +66,7 @@
     DELETE FROM pd_wrkact_main_rel
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     DELETE FROM pd_wrkact_main_rel
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
@@ -78,13 +78,13 @@
     FROM  pd_wrkact_main_rel WHERE wrkact_no = #{wrkactNo,jdbcType=VARCHAR}
   </insert>
   
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     INSERT INTO pd_wrkact_main_rel (line_id,bill_no, wrkact_no, material_no
       )
     VALUES (#{lineId,jdbcType=BIGINT}, #{billNo,jdbcType=VARCHAR}, #{billNo,jdbcType=VARCHAR}, #{materialNo,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     INSERT INTO pd_wrkact_main_rel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -115,7 +115,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     UPDATE pd_wrkact_main_rel
     <set >
       <if test="billNo != null" >
@@ -130,7 +130,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactMainRel" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWrkactMainRel" >
     UPDATE pd_wrkact_main_rel
     SET wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
       bill_no = #{billNo,jdbcType=VARCHAR},

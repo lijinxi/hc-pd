@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWrkactFaciMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWrkactFaciMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
     <result column="wrkact_no" property="wrkactNo" jdbcType="VARCHAR" />
@@ -120,11 +120,11 @@
     DELETE FROM pd_wrkact_faci
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     DELETE FROM pd_wrkact_faci
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     INSERT INTO pd_wrkact_faci (line_id, bill_no, wrkact_no, 
       wrkact_type, model_no, style_no, 
       category_no, version_no, iso_no, 
@@ -138,7 +138,7 @@
       #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
       #{auditTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     INSERT INTO pd_wrkact_faci
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -247,7 +247,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     UPDATE pd_wrkact_faci
     <set >
       <if test="billNo != null" >
@@ -301,7 +301,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
     UPDATE pd_wrkact_faci
     SET bill_no = #{billNo,jdbcType=VARCHAR},
       wrkact_no = #{wrkactNo,jdbcType=VARCHAR},
@@ -323,7 +323,7 @@
   </update>
   
   <!-- 释放 -->
-	<update id="onReleasePdWrkactFaci" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+	<update id="onReleasePdWrkactFaci" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
 	    UPDATE pd_wrkact_faci
 	    SET auditor = #{auditor,jdbcType=VARCHAR},
 		    audit_time = #{auditTime,jdbcType=TIMESTAMP},
@@ -331,7 +331,7 @@
 	    WHERE bill_no = #{billNo,jdbcType=VARCHAR}
 	</update>  
   <!-- 取消释放 -->
-	<update id="onRelReleasePdWrkactFaci" parameterType="com.belle.scm.pd.dao.entity.PdWrkactFaci" >
+	<update id="onRelReleasePdWrkactFaci" parameterType="com.hc.scm.pd.dao.entity.PdWrkactFaci" >
 	    UPDATE pd_wrkact_faci
 	    SET auditor = #{auditor,jdbcType=VARCHAR},
 		    audit_time = #{auditTime,jdbcType=TIMESTAMP},

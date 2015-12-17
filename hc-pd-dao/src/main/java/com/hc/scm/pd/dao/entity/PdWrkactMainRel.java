@@ -2,8 +2,7 @@ package com.hc.scm.pd.dao.entity;
 
 /**
  * Description: 请写出类的用途
- * All rights Reserved, Designed By BeLLE
- * Copyright:   Copyright(C) 2014-2015
+ * All rights Reserved, Designed By hc* Copyright:   Copyright(C) 2014-2015
  * Company:     Wonhigh.
  * @author:     Administrator
  * @date:  2015-05-05 08:08:46

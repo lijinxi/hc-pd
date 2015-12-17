@@ -7,7 +7,7 @@ import com.hc.scm.common.base.dal.BaseCrudDao;
 import com.hc.scm.common.exception.DaoException;
 
 /**
- * Description: 请写出类的用途 All rights Reserved, Designed By BeLLE Copyright:
+ * Description: 请写出类的用途 All rights Reserved, Designed By hcpyright:
  * Copyright(C) 2014-2015 Company: Wonhigh.
  * 
  * @author: yujh

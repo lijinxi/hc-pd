@@ -17,10 +17,10 @@
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
             <list>
-            	<value>file:/etc/belleconf/scm/blf1-common/*.properties</value>
-                <value>file:/D:/belleconf/scm/blf1-common/*.properties</value>
-                <value>file:/etc/belleconf/scm/blf1-pd/*.properties</value>
-                <value>file:/D:/belleconf/scm/blf1-pd/*.properties</value>
+            	<value>file:/etc/hcconf/scm/hc-common/*.properties</value>
+                <value>file:/D:/hcconf/scm/hc-common/*.properties</value>
+                <value>file:/etc/hcconf/scm/hc-pd/*.properties</value>
+                <value>file:/D:/hcconf/scm/hc-pd/*.properties</value>
             </list>
         </property>
     </bean>
@@ -29,18 +29,18 @@
     </bean>
     
     <!-- 本工程自动注入bean -->
-    <context:component-scan base-package="com.belle.scm.pd.web.controller"/>
-    <context:component-scan base-package="com.belle.scm.pd.service.impl"/>
-    <context:component-scan base-package="com.belle.scm.pd.dao.dal.impl"/>
-    <context:component-scan base-package="com.belle.scm.pd.service.scheduler"/>
+    <context:component-scan base-package="com.hc.scm.pd.web.controller"/>
+    <context:component-scan base-package="com.hc.scm.pd.service.impl"/>
+    <context:component-scan base-package="com.hc.scm.pd.dao.dal.impl"/>
+    <context:component-scan base-package="com.hc.scm.pd.service.scheduler"/>
     <!-- 通过扫描的模式，扫描目录所有的mapper都继承BaseMapper接口的接口， 这样一个bean就可以了 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.belle.scm.pd.dao.mapper" />
+		<property name="basePackage" value="com.hc.scm.pd.dao.mapper" />
 	</bean>
     <!-- vo查询dao-->
-	<bean id="baseSqlDao" name="baseSqlDao" class="com.belle.scm.common.base.dal.BaseSqlDaoImpl" >
-		<property name="baseMapperPackage" value="com.belle.scm.pd.dao.mapper" />
-		<property name="baseVoPackage" value="com.belle.scm.pd.dao.model" />
+	<bean id="baseSqlDao" name="baseSqlDao" class="com.hc.scm.common.base.dal.BaseSqlDaoImpl" >
+		<property name="baseMapperPackage" value="com.hc.scm.pd.dao.mapper" />
+		<property name="baseVoPackage" value="com.hc.scm.pd.dao.model" />
 	</bean>
     
     <!-- 本工程相关xml配置文件  -->
@@ -51,7 +51,7 @@
 	<import resource="classpath:META-INF/spring-shirocas-config.xml" />
 	
 	<!-- JavaMelody监控 -->
-	<import resource="classpath:net/bull/javamelody/monitoring-spring.xml"/>
+	<!-- <import resource="classpath:net/bull/javamelody/monitoring-spring.xml"/> -->
 	
 	<!-- 本工程拦截器 -->
 	<mvc:interceptors>
@@ -63,8 +63,8 @@
 			<property name="alwaysUseFullPath" value="true" />
 		</bean>
 		
-		<!-- <bean id="sessionCheckInterceptor" class="com.belle.scm.pd.web.interceptor.SessionCheckInterceptor">
-			<property name="sessionKey" value="blf1_session_user"/>
+		<!-- <bean id="sessionCheckInterceptor" class="com.hc.scm.pd.web.interceptor.SessionCheckInterceptor">
+			<property name="sessionKey" value="hc_session_user"/>
 			<property name="redirectUrl" value="${session.checked.redirect.url}"/>
 			<property name="excludeUrls" value="${session.checked.excludeUrls}"/>
 		</bean> -->

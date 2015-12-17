@@ -53,11 +53,11 @@
 
 #app-header-logo {
 	width: 150px;
-	height: 50px;
-	background: url(../images/blf1.png) no-repeat center center;
-	background-size: 90%;
+	height: 80px;
+	background: url(../images/4.png) no-repeat center center;
+	background-size: 100%;
 	/*border-right: solid #5b8dab 1px;*/
-	margin-left: 12px;
+	margin-left: 30px;
 }
 
 

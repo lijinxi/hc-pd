@@ -22,15 +22,15 @@ Hc.version = '20150203';
 
 
 /*子系统路径初始化,会在mainController中更改（读取DB中的配置）*/
-Hc.basePath = '/Hc-uc-web/';
-Hc.mdmPath = '/Hc-mdm-web/';
-Hc.mmsPath = '/Hc-mm-web/';
-Hc.sdsPath = '/Hc-sd-web/';
-Hc.ppsPath = '/Hc-pp-web/';
-Hc.fasPath = '/Hc-fa-web/';
-Hc.qmsPath = '/Hc-qm-web/';
-Hc.pdsPath = '/Hc-pd-web/';
-Hc.templatePath = '/Hc-template-web/';
+Hc.basePath = '/hc-uc-web/';
+Hc.mdmPath = '/hc-mdm-web/';
+Hc.mmsPath = '/hc-mm-web/';
+Hc.sdsPath = '/hc-sd-web/';
+Hc.ppsPath = '/hc-pp-web/';
+Hc.fasPath = '/hc-fa-web/';
+Hc.qmsPath = '/hc-qm-web/';
+Hc.pdsPath = '/hc-pd-web/';
+Hc.templatePath = '/hc-template-web/';
 
 /*字体图标*/
 Hc.Icon= {
@@ -76,7 +76,7 @@ Hc.Icon= {
 Hc.loadJsCss = function(url,isVersion,hasDebug) {
     var isLocal = location.href.indexOf('localhost') > -1||location.href.indexOf('127.0.0.1')>=-1,
         isJs = url.substr(url.length - 3) == ".js";
-
+     console.info("执行了没有");
     if (hasDebug && isLocal && isJs) {
         url = url.substr(0, url.length - 3) + '-debug.js';
     }
@@ -84,7 +84,7 @@ Hc.loadJsCss = function(url,isVersion,hasDebug) {
     if(isVersion){
         url+="?"+Hc.version;
     }
-   
+    console.info("执行了没有："+url);
     if (isJs) {
         document.write('<script src="' + url + '" type="text/javascript"></' + 'script>');
     } else {
@@ -95,13 +95,13 @@ Hc.loadJsCss = function(url,isVersion,hasDebug) {
 (function() {
     Hc.loadJsCss('resources/static/js/extjs/packages/ext-theme-' + Hc.theme + '/ext-theme-' + Hc.theme + '-all.css');
 	Hc.loadJsCss('resources/static/css/font-awesome.min.css');
-	Hc.loadJsCss('resources/static/css/Hc-all.css', true);
-	Hc.loadJsCss('resources/static/js/extjs/ext-all.js', false);
+	Hc.loadJsCss('resources/static/css/hc-all.css', true);
+	Hc.loadJsCss('resources/static/js/extjs/ext-all-debug.js', true);
 	Hc.loadJsCss('resources/static/js/ext-ux/ext-ux-all.js', true);
-	Hc.loadJsCss('resources/static/js/Hc/base-all.js', true, true);
-	Hc.loadJsCss('resources/static/js/Hc/Hc-ux-all.js', true, true);
+	Hc.loadJsCss('resources/static/js/hc/base-all.js', true, true);
+	Hc.loadJsCss('resources/static/js/hc/hc-ux-all.js', true, true);
 	Hc.loadJsCss('resources/static/js/extjs/packages/ext-locale/ext-locale-zh_CN.js');
-	Hc.loadJsCss('resources/static/js/open/security.js');
+	//Hc.loadJsCss('resources/static/js/open/security.js');
 })();
 
 

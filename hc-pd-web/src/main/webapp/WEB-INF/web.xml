@@ -5,14 +5,14 @@
 	id="WebApp_ID" version="2.5">
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>blf1-pd</param-value>
+		<param-value>hc-pd</param-value>
 	</context-param>
-	<display-name>blf1-pd-web</display-name>
+	<display-name>hc-pd-web</display-name>
 	
 	<!-- 启用配置服务器上的配置，本地开发请注释-begin -->
 	<context-param>
 		<param-name>groupdataIdList</param-name>
-		<param-value>blf1-common:common-config,blf1-mdm:mdm-config,blf1-mdm:jdbc-config,blf1-mdm:redis-config</param-value>
+		<param-value>hc-common:common-config,hc-mdm:mdm-config,hc-mdm:jdbc-config,hc-mdm:redis-config</param-value>
 	</context-param>
 
 	<!-- logback.xml配置文件加载 -->
@@ -27,21 +27,21 @@
 	<!-- servetContext -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:META-INF/applicationContext.xml</param-value>
+		<param-value>classpath:META-INF/applicationContext.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
 	</listener>
 
-	<!-- CAS Shiro单点登录开始，本地开发请注释-begin -->
+	<!-- CAS Shiro单点登录开始，本地开发请注释-begin 
 	<context-param>
 		<param-name>casConfigFile</param-name>
-		<param-value>/blf1-common/common-config</param-value>
+		<param-value>/hc-common/common-config</param-value>
 	</context-param>
    
 	<listener>
-		<listener-class>com.belle.scm.common.shiro.CasConfigListener</listener-class>
-	</listener>
+		<listener-class>com.hc.scm.common.shiro.CasConfigListener</listener-class>
+	</listener>-->
 	<!-- CAS Shiro单点登录结束，本地开发请注释-end -->
 	
 	<!-- 过滤器filter-begin -->
@@ -72,7 +72,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:conf/dispatcher.xml</param-value>
+			<param-value>classpath:META-INF/dispatcher.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

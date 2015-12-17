@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdWorkProcessCategoryMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdWorkProcessCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="work_cate_code" property="workCateCode" jdbcType="VARCHAR" />
     <result column="work_cate_name" property="workCateName" jdbcType="VARCHAR" />
@@ -68,11 +68,11 @@
     DELETE FROM pd_work_process_category
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     DELETE FROM pd_work_process_category
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     INSERT INTO pd_work_process_category (line_id, work_cate_code, work_cate_name, 
       enable_flag, description, creator, 
       create_time, modifier, modify_time, 
@@ -82,7 +82,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     INSERT INTO pd_work_process_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -149,7 +149,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     UPDATE pd_work_process_category
     <set >
       <if test="workCateCode != null" >
@@ -182,7 +182,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdWorkProcessCategory" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdWorkProcessCategory" >
     UPDATE pd_work_process_category
     SET work_cate_code = #{workCateCode,jdbcType=VARCHAR},
       work_cate_name = #{workCateName,jdbcType=VARCHAR},

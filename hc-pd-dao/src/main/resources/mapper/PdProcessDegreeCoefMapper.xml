@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.belle.scm.pd.dao.mapper.PdProcessDegreeCoefMapper" >
-  <resultMap id="BaseResultMap" type="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+<mapper namespace="com.hc.scm.pd.dao.mapper.PdProcessDegreeCoefMapper" >
+  <resultMap id="BaseResultMap" type="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     <id column="line_id" property="lineId" jdbcType="BIGINT" />
     <result column="work_process_value" property="workProcessValue" jdbcType="INTEGER" />
     <result column="work_process_coef" property="workProcessCoef" jdbcType="DECIMAL" />
@@ -56,11 +56,11 @@
     DELETE FROM pd_process_degree_coef
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByPrimarayKeyForModel" parameterType="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     DELETE FROM pd_process_degree_coef
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+  <insert id="insert" parameterType="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     INSERT INTO pd_process_degree_coef (line_id, work_process_value, work_process_coef, 
       work_process_degree, enable_flag, creator, 
       create_time, modifier, modify_time, 
@@ -70,7 +70,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+  <insert id="insertSelective" parameterType="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     INSERT INTO pd_process_degree_coef
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lineId != null" >
@@ -137,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     UPDATE pd_process_degree_coef
     <set >
       <if test="workProcessValue != null" >
@@ -170,7 +170,7 @@
     </set>
     WHERE line_id = #{lineId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.belle.scm.pd.dao.entity.PdProcessDegreeCoef" >
+  <update id="updateByPrimaryKey" parameterType="com.hc.scm.pd.dao.entity.PdProcessDegreeCoef" >
     UPDATE pd_process_degree_coef
     SET work_process_value = #{workProcessValue,jdbcType=INTEGER},
       work_process_coef = #{workProcessCoef,jdbcType=DECIMAL},

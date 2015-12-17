@@ -33,12 +33,12 @@
         </property>
     </bean>
 
-    <bean id="casFilter" class="com.belle.scm.common.shiro.ShiroFilter">
+    <bean id="casFilter" class="com.hc.scm.common.shiro.ShiroFilter">
     	<property name="excludePath" value="/resources"/>
 	</bean>
 	
 	<!--自定义Realm 继承自AuthorizingRealm-->
-    <bean id="monitorRealm" class="com.belle.scm.common.shiro.MonitorRealm">
+    <bean id="monitorRealm" class="com.hc.scm.common.shiro.MonitorRealm">
         <property name="cachingEnabled" value="true" />
         <property name="authenticationCachingEnabled" value="true" />
         <property name="authenticationCacheName" value="authenticationCache" />
@@ -111,5 +111,5 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
-    <bean id="ShiroSession" name="ShiroSession" class="com.belle.scm.pd.web.interceptor.ShiroSessionImpl" />
+    <bean id="ShiroSession" name="ShiroSession" class="com.hc.scm.pd.web.interceptor.ShiroSessionImpl" />
 </beans>
